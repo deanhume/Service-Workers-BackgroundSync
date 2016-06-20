@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>title</title>
+ </head>
+ <body>
+   <button id="requestButton">Do something</button>
+	<script>
+    if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./service-worker.js').then((registration) => {
+          return navigator.serviceWorker.ready;
+        }).then((registration) => {
+          // register sync
+          document.getElementById('requestButton').addEventListener('click', () => {
+            registration.sync.register('sync-data').then(() => {
+              console.log('sync registered');
+            }).catch(console.error.bind(console));
+          });
+        }).catch(console.error.bind(console));
+    }
+	</script>
+  </body>
+</html>
