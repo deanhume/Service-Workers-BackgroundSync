@@ -10,13 +10,13 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('sync', function(event) {
   console.log('firing: sync');
-  if (event.tag == 'sync-data') {
+  if (event.tag == 'image-fetch') {
     console.log('sync event fired');
-    event.waitUntil(doSomeStuff());
+    event.waitUntil(fetchDogImage());
   }
 });
 
-function doSomeStuff()
+function fetchDogImage()
 {
   console.log('firing: doSomeStuff()');
   fetch('./doge.png')

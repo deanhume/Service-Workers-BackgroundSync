@@ -2,9 +2,10 @@
 <html>
  <head>
   <meta charset="UTF-8">
-  <title>title</title>
+  <title>Basic BackgroundSync Example</title>
  </head>
  <body>
+   <p>By clicking on the image below<p>
    <button id="requestButton">Do something</button>
 	<script>
     if ('serviceWorker' in navigator) {
@@ -13,11 +14,18 @@
         }).then((registration) => {
           // register sync
           document.getElementById('requestButton').addEventListener('click', () => {
-            registration.sync.register('sync-data').then(() => {
+            registration.sync.register('image-fetch').then(() => {
               console.log('sync registered');
-            }).catch(console.error.bind(console));
+            }).catch(function(error){
+              console.log('Unable to fetch image.');
+            });
           });
-        }).catch(console.error.bind(console));
+        }).catch(function(error){
+          console.log('Unable to register Service Worker.');
+        });
+    }
+    else{
+      console.log('Service Worker functionality not supported.');
     }
 	</script>
   </body>
