@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Basic BackgroundSync Example</title>
+ </head>
+ <body>
+   <p>By clicking on the image below<p>
+   <button id="requestButton">Do something</button>
+	<script>
+    if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./service-worker.js').then((registration) => {
+          return navigator.serviceWorker.ready;
+        }).then((registration) => {
+          // register sync
+          document.getElementById('requestButton').addEventListener('click', () => {
+            registration.sync.register('image-fetch').then(() => {
+              console.log('sync registered');
+            }).catch(function(error){
+              console.log('Unable to fetch image.');
+            });
+          });
+        }).catch(function(error){
+          console.log('Unable to register Service Worker.');
+        });
+    }
+    else{
+      console.log('Service Worker functionality not supported.');
+    }
+	</script>
+  </body>
+</html>
