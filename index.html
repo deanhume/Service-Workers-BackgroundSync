@@ -5,9 +5,27 @@
   <title>Basic BackgroundSync Example</title>
  </head>
  <body>
-   <p>By clicking on the image below<p>
-   <button id="requestButton">Do something</button>
+   <div id="connectionStatus">You are currently offline. Any requests made will be queued and synced as soon as you are connected again.</div>
+   <p>Click on the button below to make an HTTP request.<p>
+   <button id="requestButton">Make an HTTP request - do it!</button>
 	<script>
+  // Connection Status
+  function isOnline() {
+    var connectionStatus = document.getElementById('connectionStatus');
+
+    if (navigator.onLine){
+      connectionStatus.innerHTML = 'You are currently online!';
+    }
+    else{
+      connectionStatus.innerHTML = 'You are currently offline. Any requests made will be queued and synced as soon as you are connected again.';
+    }
+  }
+
+  window.addEventListener('online', isOnline);
+  window.addEventListener('offline', isOnline);
+  isOnline();
+
+    // Service Worker code
     if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('./service-worker.js').then((registration) => {
           return navigator.serviceWorker.ready;
